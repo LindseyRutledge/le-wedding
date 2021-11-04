@@ -1,24 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import Masonry from 'react-masonry-component';
 
 function App() {
+  const [weddingPhotos, setWeddingPhotos] = useState<any[]>([]);
+
+  const importAll = (r: any) => {
+    return r.keys().map(r);
+  };
+
+  useEffect(() => {
+    setWeddingPhotos(importAll(require.context('./assets/wedding-photos', false, /\.(png|jpe?g|svg)$/)));
+  }, []);
+
+  console.log(weddingPhotos);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <Masonry
+        className='wedding-photos'
+        options={{
+          columnWidth: '.wedding-photo',
+          itemSelector: '.wedding-photo',
+          gutter: 10,
+          fitWidth: true,
+          percentPosition: true,
+        }}
+        // @ts-ignore
+        imagesLoadedOptions={{ background: '.wedding-photo' }}
+      >
+        {weddingPhotos.map((image, index) => {
+          return (
+            <img className='wedding-photo' key={index} src={image?.default} />
+          );
+        })}
+      </Masonry>
     </div>
   );
 }

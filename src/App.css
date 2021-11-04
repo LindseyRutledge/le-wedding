@@ -1,3 +1,7 @@
+body {
+  background-color: #132218;
+}
+
 .App {
   text-align: center;
 }
@@ -34,5 +38,21 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+.wedding-photos {
+  margin: 0 auto;
+}
+
+.wedding-photo {
+  width: 600px;
+  margin-bottom: 10px;
+  border: 10px solid white;
+}
+
+@media only screen and (max-width: 700px) {
+  .wedding-photo {
+    width: 300px;
   }
 }
