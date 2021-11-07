@@ -45,14 +45,35 @@ body {
   margin: 0 auto;
 }
 
+.wedding-photo, .wedding-photo-bookend {
+  background: linear-gradient(130deg, #29302c, #363d39, #29302c);
+  background-size: 200% 200%;
+  border: 10px solid white;
+  margin-bottom: 10px;
+  animation: loadingColors 5s infinite;
+}
+
 .wedding-photo {
   width: 600px;
-  margin-bottom: 10px;
-  border: 10px solid white;
+}
+
+.wedding-photo-bookend {
+  width: 1210px;
 }
 
 @media only screen and (max-width: 700px) {
   .wedding-photo {
     width: 300px;
   }
+
+  .wedding-photo-bookend {
+    width: 610px;
+  }
+}
+
+
+@keyframes loadingColors {
+  0%{background-position: 0% 0%}
+  50%{background-position: 100% 100%}
+  100%{background-position: 0% 0%}
 }
