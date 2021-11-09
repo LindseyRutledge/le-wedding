@@ -22,6 +22,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "push": "git push",
     "gh-deploy": "gh-pages -d build",
     "build-deploy": "npm-run-all build gh-deploy",
     "push-deploy": "npm-run-all build push gh-deploy"
