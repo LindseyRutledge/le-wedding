@@ -66,6 +66,12 @@ function App() {
   return (
     <div className='App'>
       {renderSelectedPhoto()}
+      <a
+        className='all-photos-link'
+        href='https://drive.google.com/drive/folders/1eqQKcQzigJ7UIst5_eu8fbMSYO4MxmHG?usp=sharing'
+      >
+        Full Quality Photos and Videos (Click Here)
+      </a>
       <Masonry
         className='wedding-photos'
         options={{
