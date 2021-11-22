@@ -87,6 +87,8 @@ body {
 .selected-photo-img {
   max-height: calc(100% - 50px);
   max-width: calc(100% - 50px);
+  min-height: 300px;
+  min-width: 300px;
   background: linear-gradient(130deg, #29302c, #363d39, #29302c);
   background-size: 200% 200%;
   border: 10px solid white;
