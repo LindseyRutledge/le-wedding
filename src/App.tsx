@@ -5,7 +5,9 @@ import './App.css';
 
 function App() {
   const [weddingPhotos, setWeddingPhotos] = useState<any[]>([]);
-  const [visibleCount, setVisibleCount] = useState<number>(10);
+  const [weddingPhotoThumbnails, setWeddingPhotoThumbnails] = useState<any[]>([]);
+  const [selectedPhoto, setSelectedPhoto] = useState<string>();
+  const [visibleCount, setVisibleCount] = useState<number>(20);
 
   const importAll = (r: any) => {
     return r.keys().map(r);
@@ -23,19 +25,47 @@ function App() {
 
   useEffect(() => {
     const allPhotos = importAll(require.context('./assets/wedding-photos', false, /\.(png|jpe?g|svg)$/));
-    allPhotos.sort((a: any, b: any) => {
+    setWeddingPhotos(allPhotos);
+
+    const allPhotosSmall = importAll(require.context('./assets/wedding-photos-thumbnails', false, /\.(png|jpe?g|svg)$/));
+    allPhotosSmall.sort((a: any, b: any) => {
       const photoNameA = getImageName(a.default);
       const photoNameB = getImageName(b.default);
 
       return photoNameA.localeCompare(photoNameB, undefined, { numeric: true, sensitivity: 'base' });
     });
-    setWeddingPhotos(allPhotos);
+    setWeddingPhotoThumbnails(allPhotosSmall);
   }, []);
 
   const hasMore = visibleCount < weddingPhotos.length;
 
+  const renderSelectedPhoto = () => {
+    if (selectedPhoto) {
+      const imageName = getImageName(selectedPhoto);
+
+      const matchingPhoto = weddingPhotos.find((photo) => {
+        return photo.default.includes(imageName);
+      });
+
+      return (
+        <div
+          className='selected-photo'
+          onClick={(e) => setSelectedPhoto(undefined)}
+        >
+          <img
+            className='selected-photo-img'
+            src={matchingPhoto ? matchingPhoto.default : selectedPhoto}
+            onClick={(e) => e.stopPropagation()}
+          />
+          <div className='close-icon'>&#10006;</div>
+        </div>
+      );
+    }
+  };
+
   return (
     <div className='App'>
+      {renderSelectedPhoto()}
       <Masonry
         className='wedding-photos'
         options={{
@@ -48,20 +78,19 @@ function App() {
         <InfiniteScroll
           dataLength={visibleCount}
           next={() => setTimeout(() => {
-            setVisibleCount(visibleCount + 5);
-          }, 1000)}
+            setVisibleCount(visibleCount + 20);
+          }, 500)}
           hasMore={hasMore}
           loader={<div>Loading...</div>}
         >
-          {weddingPhotos.slice(0, visibleCount).map((image, index) => {
+          {weddingPhotoThumbnails.slice(0, visibleCount).map((image, index) => {
             return (
-              <a href={image?.default} title="View Image" target="_blank">
-                <img
-                  className={index === 0 || index === weddingPhotos.length - 1 ? 'wedding-photo-bookend' : 'wedding-photo'}
-                  key={index}
-                  src={image?.default}
-                />
-              </a>
+              <img
+                className={index === 0 || index === weddingPhotos.length - 1 ? 'wedding-photo-bookend' : 'wedding-photo'}
+                key={index}
+                src={image?.default}
+                onClick={() => setSelectedPhoto(image?.default)}
+              />
             );
           })}
         </InfiniteScroll>

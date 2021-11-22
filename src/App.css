@@ -49,6 +49,7 @@ body {
   background: linear-gradient(130deg, #29302c, #363d39, #29302c);
   background-size: 200% 200%;
   border: 10px solid white;
+  cursor: pointer;
   margin-bottom: 10px;
   animation: loadingColors 5s infinite;
 }
@@ -71,6 +72,44 @@ body {
   }
 }
 
+.selected-photo {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  z-index: 100;
+}
+
+.selected-photo-img {
+  max-height: calc(100% - 50px);
+  max-width: calc(100% - 50px);
+  background: linear-gradient(130deg, #29302c, #363d39, #29302c);
+  background-size: 200% 200%;
+  border: 10px solid white;
+  cursor: default;
+  animation: loadingColors 5s infinite;
+}
+
+.close-icon {
+  height: 40px;
+  width: 40px;
+  align-items: center;
+  align-self: flex-start;
+  background-color: white;
+  border-radius: 50%;
+  color: black;
+  cursor: pointer;
+  display: flex;
+  font-size: 20px;
+  justify-content: center;
+  position: relative;
+  top: 25px;
+  left: 5px;
+}
 
 @keyframes loadingColors {
   0%{background-position: 0% 0%}
